@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gabriel Vidal | Desenvolvedor web Front-end e Full-stack</title>
+  <meta name="description" content="Gabriel Vidal, desenvolvedor web com foco em front-end e experiência em full-stack. Sites e sistemas para negócios reais com HTML, CSS, JavaScript, Node.js, PostgreSQL e Next.js. Veja projetos e fale comigo.">
+  <meta name="theme-color" content="#1c1917">
+  <meta property="og:title" content="Gabriel Vidal | Desenvolvedor web Front-end e Full-stack">
+  <meta property="og:description" content="Sites e sistemas web para negócios de verdade, do front-end ao banco de dados.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Gabriel Vidal">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:image" content="og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Gabriel Vidal, desenvolvedor web front-end e full-stack">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="og-image.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231c1917'/%3E%3Ctext x='32' y='44' font-size='36' font-family='Georgia,serif' font-weight='700' text-anchor='middle' fill='%23f0a93e'%3EG%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Hanken+Grotesk:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      var reduce = false;
+      var saved = null;
+      var lang = null;
+      try { reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+      try { saved = JSON.parse(localStorage.getItem('portfolio-design') || 'null'); } catch (e) {}
+      try { lang = localStorage.getItem('portfolio-lang'); } catch (e) {}
+      if (!lang) {
+        var prefs = navigator.languages || [navigator.language || 'pt'];
+        for (var i = 0; i < prefs.length && !lang; i += 1) {
+          var code = String(prefs[i]).slice(0, 2).toLowerCase();
+          if (code === 'pt' || code === 'en' || code === 'es') lang = code;
+        }
+      }
+      d.lang = lang === 'en' ? 'en' : (lang === 'es' ? 'es' : 'pt-BR');
+      var s = saved || {};
+      d.dataset.theme = s.theme === 'light' ? 'light' : 'dark';
+      d.dataset.radius = s.radius || 'soft';
+      d.dataset.font = s.font || 'expressive';
+      d.dataset.density = s.density || 'comfy';
+      d.dataset.motion = s.motion || (reduce ? 'off' : 'on');
+      if (s.hues) {
+        d.style.setProperty('--h1', s.hues.h1);
+        d.style.setProperty('--h2', s.hues.h2);
+        d.style.setProperty('--hb', s.hues.hb);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
+
+  <div class="ambient" aria-hidden="true">
+    <span class="ambient__blob ambient__blob--a" id="blobA"></span>
+    <span class="ambient__blob ambient__blob--b" id="blobB"></span>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"><span id="cursorLabel"></span></div>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <header class="site-header" id="siteHeader" data-open="false">
+    <div class="container site-header__bar">
+      <a class="brand" href="#inicio" aria-label="Gabriel Vidal, ir para o início" data-i18n-attr="aria-label:brand.aria">
+        <span class="brand__mark" aria-hidden="true">G</span>
+        <span class="brand__name">Gabriel Vidal</span>
+      </a>
+
+      <nav class="nav" id="siteNav" aria-label="Principal" data-i18n-attr="aria-label:nav.label">
+        <a href="#sobre" data-nav data-i18n="nav.about">Sobre</a>
+        <a href="#projetos" data-nav data-i18n="nav.projects">Projetos</a>
+        <a href="#conhecimentos" data-nav data-i18n="nav.skills">Conhecimentos</a>
+        <a href="#metodo" data-nav data-i18n="nav.method">Método</a>
+        <a href="#experimente" data-nav data-i18n="nav.lab">Experimente</a>
+        <a href="#contato" data-nav data-i18n="nav.contact">Contato</a>
+      </nav>
+
+      <div class="site-header__actions">
+        <button class="cmd-btn" id="cmdkOpen" type="button" aria-label="Abrir busca rápida" aria-haspopup="dialog" data-i18n-attr="aria-label:cmd.open">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 16l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <kbd id="cmdkHint">Ctrl K</kbd>
+        </button>
+        <div class="lang" id="langSwitch" role="group" aria-label="Idioma" data-i18n-attr="aria-label:lang.label">
+          <button type="button" data-lang="pt" lang="pt-BR" title="Português" aria-pressed="true">PT</button>
+          <button type="button" data-lang="en" lang="en" title="English" aria-pressed="false">EN</button>
+          <button type="button" data-lang="es" lang="es" title="Español" aria-pressed="false">ES</button>
+        </div>
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Alternar entre tema claro e escuro" data-i18n-attr="aria-label:theme.toggle">
+          <svg class="icon icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="icon icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Abrir menu">
+          <span class="menu-btn__bars" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="inicio" aria-labelledby="heroTitle">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <p class="hero__loc hero-in" id="heroLoc" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span></span></p>
+          <p class="hero__hello hero-in" data-i18n="hero.hello">Olá, eu sou o Gabriel Vidal, desenvolvedor web.</p>
+          <h1 id="heroTitle" data-split data-i18n="hero.title">Sites e sistemas web para negócios de verdade.</h1>
+          <p class="hero__lead hero-in" data-i18n="hero.lead">Meu foco é o front-end com HTML, CSS e JavaScript, e eu vou até o back-end com Node.js e bancos de dados. Também desenvolvo em Python, sob demanda. Cada projeto parte da marca do cliente e é pensado primeiro para o celular.</p>
+          <p class="hero__now hero-in"><span class="hero__now-label" data-i18n="hero.nowLabel">Construindo agora:</span> <span class="typed" id="typed" aria-live="off"></span></p>
+          <div class="hero__actions hero-in">
+            <a class="btn btn--primary" href="#projetos" data-i18n="hero.ctaProjects">Ver projetos</a>
+            <a class="btn btn--ghost" href="#contato" data-i18n="hero.ctaTalk">Falar comigo</a>
+            <a class="btn btn--ghost" id="heroCv" href="#" target="_blank" rel="noopener noreferrer" hidden data-i18n="hero.ctaCv">Ver meu currículo</a>
+            <button class="btn btn--text" type="button" data-open-studio data-i18n="hero.ctaDesign">Mudar o design do site</button>
+          </div>
+        </div>
+        <div class="bento hero-in" id="heroBento" aria-label="Projetos em destaque" data-i18n-attr="aria-label:hero.bento"></div>
+      </div>
+    </section>
+
+    <div class="marquee-wrap">
+      <div class="marquee" id="marquee" aria-hidden="true">
+        <div class="marquee__track" id="marqueeTrack"></div>
+      </div>
+      <button class="marquee__toggle" id="marqueeToggle" type="button" aria-pressed="false" aria-label="Pausar a faixa de tecnologias">
+        <svg class="icon icon--pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14M16 5v14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        <svg class="icon icon--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+      </button>
+    </div>
+
+    <section class="section" id="sobre" aria-labelledby="aboutTitle">
+      <div class="container about">
+        <div class="about__main">
+          <h2 id="aboutTitle" data-split data-i18n="about.title">Programo com o olhar de quem também desenha.</h2>
+          <p data-i18n="about.p1">Sou desenvolvedor de sites e sistemas, com mais força no front-end (HTML, CSS e JavaScript) e experiência crescente no back-end com Node.js e bancos de dados. Meus projetos são para negócios reais: barbearias, uma empresa de turismo, uma revenda de carros e uma loja de cosméticos.</p>
+          <p data-i18n="about.p2">Gosto de interfaces com pouco ruído, hierarquia clara e atenção ao detalhe. Cada projeto parte da marca do cliente, e cada tela é pensada primeiro para o celular.</p>
+
+          <p class="statement" data-i18n="about.statement">Entrego o que funciona e cuido para que também dê gosto de usar.</p>
+
+          <dl class="facts">
+            <div><dt data-i18n="fact.focus.label">Foco</dt><dd data-i18n="fact.focus.value">Front-end com HTML, CSS e JavaScript</dd></div>
+            <div><dt data-i18n="fact.back.label">Back-end</dt><dd data-i18n="fact.back.value">Node.js, PostgreSQL e Prisma, em evolução</dd></div>
+            <div><dt data-i18n="fact.approach.label">Abordagem</dt><dd data-i18n="fact.approach.value">Mobile primeiro e CSS a partir da marca do cliente</dd></div>
+            <div><dt data-i18n="fact.lang.label">Idioma de trabalho</dt><dd data-i18n="fact.lang.value">Português</dd></div>
+          </dl>
+        </div>
+
+        <div class="about__side">
+          <h3 data-i18n="about.timeline">Trajetória</h3>
+          <ul class="timeline trail">
+            <li>
+              <h4 data-i18n="tl.1.title">Desenvolvedor web freelancer</h4>
+              <p data-i18n="tl.1.text">Sites e sistemas para pequenos negócios, do briefing ao código: barbearias, turismo, revenda de carros e cosméticos.</p>
+            </li>
+            <li>
+              <h4 data-i18n="tl.2.title">Projetos autorais</h4>
+              <p data-i18n="tl.2.text">CT, uma calculadora com cinco abas, e Gasto na Foto, que lê comprovantes com IA e soma o total.</p>
+            </li>
+            <li>
+              <h4 data-i18n="tl.3.title">Profissional autônomo</h4>
+              <p data-i18n="tl.3.text">Atendimento direto ao cliente, gestão de agenda e de reputação de perfil em plataforma, por conta própria.</p>
+            </li>
+          </ul>
+          <div class="education" id="education" hidden>
+            <h3 data-i18n="education.title">Formação e cursos</h3>
+            <ul class="edu-list" id="educationList"></ul>
+          </div>
+          <div class="cv-card" id="cvCard" hidden>
+            <span class="cv-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M7 3.5h7l4 4V20.5H7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 3.5v4h4M9.5 12h5M9.5 15.5h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+            <div>
+              <h3 data-i18n="cv.cardTitle">Quer conhecer melhor a minha trajetória?</h3>
+              <p data-i18n="cv.cardText">Minha trajetória, formação e cursos reunidos em um PDF. Dê uma olhada quando quiser.</p>
+              <a class="btn btn--primary" id="cvCardLink" href="#" target="_blank" rel="noopener noreferrer" data-i18n="cv.cardBtn">Dar uma olhada no meu currículo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projetos" aria-labelledby="projectsTitle">
+      <div class="container">
+        <div class="section__head">
+          <h2 id="projectsTitle" data-split data-i18n="projects.title">Projetos</h2>
+          <p data-i18n="projects.lead">Trabalhos para clientes e projetos autorais, com o estado de cada um à vista. Abra um projeto para ver o que já funciona e o que ainda está em andamento.</p>
+        </div>
+
+        <div class="filters" id="categoryFilters" role="group" aria-label="Filtrar projetos por tipo" data-i18n-attr="aria-label:projects.filterLabel"></div>
+        <div class="filters__meta">
+          <p id="resultCount" role="status"></p>
+          <div id="techFilter"></div>
+        </div>
+
+        <div class="grid" id="projectGrid" aria-busy="true"></div>
+        <noscript><p class="state">Este portfólio precisa de JavaScript. / This portfolio needs JavaScript.</p></noscript>
+      </div>
+    </section>
+
+    <section class="section section--tint" id="conhecimentos" aria-labelledby="skillsTitle">
+      <div class="container">
+        <div class="section__head">
+          <h2 id="skillsTitle" data-split data-i18n="skills.title">Conhecimentos</h2>
+          <p data-i18n="skills.lead">Toque em uma tecnologia para ver em quais projetos ela foi usada.</p>
+        </div>
+        <div class="skills" id="skillGroups"></div>
+        <div class="skill-panel" id="skillPanel" aria-live="polite">
+          <p class="skill-panel__hint" data-i18n="skills.hint">Escolha uma tecnologia acima.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="metodo" aria-labelledby="methodTitle">
+      <div class="container method">
+        <div class="method__intro">
+          <h2 id="methodTitle" data-split data-i18n="method.title">Como eu trabalho</h2>
+          <p data-i18n="method.lead">Cinco hábitos que se repetem nos projetos acima. Cada passo aponta para onde dá para ver a prática.</p>
+        </div>
+        <ol class="steps trail" id="methodSteps"></ol>
+      </div>
+    </section>
+
+    <section class="section" id="depoimentos" aria-labelledby="testimonialsTitle" hidden>
+      <div class="container">
+        <div class="section__head">
+          <h2 id="testimonialsTitle" data-split data-i18n="testimonials.title">O que dizem sobre o meu trabalho</h2>
+          <p data-i18n="testimonials.lead">Depoimentos de clientes e colegas.</p>
+        </div>
+        <ul class="testimonials" id="testimonialList"></ul>
+      </div>
+    </section>
+
+    <section class="section section--tint" id="experimente" aria-labelledby="labTitle">
+      <div class="container lab">
+        <div class="lab__intro">
+          <h2 id="labTitle" data-split data-i18n="lab.title">Experimente</h2>
+          <p data-i18n="lab.lead">Duas abas do CT (Calcula Tudo) em versão resumida. Toda a lógica roda no seu navegador, sem biblioteca externa.</p>
+        </div>
+
+        <div class="lab__panel">
+          <div class="tabs" role="tablist" aria-label="Calculadoras" data-i18n-attr="aria-label:lab.tabs">
+            <button class="tabs__btn" role="tab" id="tab-imc" type="button" aria-selected="true" aria-controls="panel-imc" data-i18n="lab.tabBmi">IMC</button>
+            <button class="tabs__btn" role="tab" id="tab-loan" type="button" aria-selected="false" aria-controls="panel-loan" tabindex="-1" data-i18n="lab.tabLoan">Financiamento</button>
+          </div>
+
+          <div class="lab__body" role="tabpanel" id="panel-imc" aria-labelledby="tab-imc">
+            <form class="calc" id="bmiForm" novalidate>
+              <div class="field">
+                <label for="bmiWeight" data-i18n="lab.weight">Peso (kg)</label>
+                <input id="bmiWeight" name="weight" type="text" inputmode="decimal" autocomplete="off" placeholder="72,5" data-i18n-attr="placeholder:lab.weightPh">
+              </div>
+              <div class="field">
+                <label for="bmiHeight" data-i18n="lab.height">Altura (cm)</label>
+                <input id="bmiHeight" name="height" type="text" inputmode="decimal" autocomplete="off" placeholder="175" data-i18n-attr="placeholder:lab.heightPh">
+              </div>
+              <button class="btn btn--primary" type="submit" data-i18n="lab.bmiSubmit">Calcular IMC</button>
+            </form>
+            <div class="result" id="bmiResult" aria-live="polite">
+              <p class="result__hint" data-i18n="lab.bmiHint">Informe peso e altura para ver o resultado.</p>
+            </div>
+          </div>
+
+          <div class="lab__body" role="tabpanel" id="panel-loan" aria-labelledby="tab-loan" hidden>
+            <form class="calc" id="loanForm" novalidate>
+              <div class="field">
+                <label for="loanAmount" data-i18n="lab.amount">Valor financiado (R$)</label>
+                <input id="loanAmount" name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="40000" data-i18n-attr="placeholder:lab.amountPh">
+              </div>
+              <div class="field">
+                <label for="loanRate" data-i18n="lab.rate">Juros ao mês (%)</label>
+                <input id="loanRate" name="rate" type="text" inputmode="decimal" autocomplete="off" placeholder="1,49" data-i18n-attr="placeholder:lab.ratePh">
+              </div>
+              <div class="field">
+                <label for="loanMonths" data-i18n="lab.months">Prazo (meses)</label>
+                <input id="loanMonths" name="months" type="text" inputmode="numeric" autocomplete="off" placeholder="48" data-i18n-attr="placeholder:lab.monthsPh">
+              </div>
+              <button class="btn btn--primary" type="submit" data-i18n="lab.loanSubmit">Calcular parcela</button>
+            </form>
+            <div class="result" id="loanResult" aria-live="polite">
+              <p class="result__hint" data-i18n="lab.loanHint">Informe valor, juros e prazo. O cálculo usa a tabela Price, sem taxas extras.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contato" aria-labelledby="contactTitle">
+      <div class="container contact">
+        <div class="contact__main">
+          <h2 id="contactTitle" data-split data-i18n="contact.title">Vamos conversar sobre o seu projeto?</h2>
+          <p data-i18n="contact.lead">Escreva abaixo e a mensagem abre pronta no WhatsApp ou no e-mail.</p>
+
+          <form id="contactForm" novalidate>
+            <div class="field">
+              <label for="contactName" data-i18n="contact.name">Seu nome</label>
+              <input id="contactName" name="name" type="text" maxlength="80" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="contactMessage" data-i18n="contact.message">O que você precisa?</label>
+              <textarea id="contactMessage" name="message" rows="5" maxlength="600" required></textarea>
+            </div>
+            <button class="btn btn--primary" type="submit" data-i18n="contact.submit">Enviar mensagem</button>
+            <p class="form-status" id="formStatus" role="status"></p>
+          </form>
+        </div>
+
+        <div class="contact__side">
+          <h3 data-i18n="contact.side">Outros caminhos</h3>
+          <ul class="channels" id="channelList"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p id="footerText">© Gabriel Vidal.</p>
+      <ul class="social" id="socialLinks" aria-label="Redes e contatos" data-i18n-attr="aria-label:footer.social" hidden></ul>
+      <a href="#inicio" data-i18n="footer.top">Voltar ao topo</a>
+    </div>
+  </footer>
+
+  <button class="studio-toggle" id="studioToggle" type="button" aria-expanded="false" aria-controls="studio">
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.8 2-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg>
+    <span data-i18n="studio.toggle">Design</span>
+  </button>
+  <div class="studio-hint" id="studioHint" role="status" hidden data-i18n="studio.hint">Quer mudar as cores e o estilo do site? Toque em Design.</div>
+
+  <aside class="studio" id="studio" aria-labelledby="studioTitle" hidden>
+    <div class="studio__head">
+      <h2 id="studioTitle" data-i18n="studio.title">Estúdio de design</h2>
+      <button class="studio__close" type="button" data-studio-close aria-label="Fechar estúdio de design" data-i18n-attr="aria-label:studio.close">&times;</button>
+    </div>
+    <p class="studio__lead" data-i18n="studio.lead">Mude o visual deste portfólio em tempo real. Suas escolhas ficam salvas neste navegador.</p>
+
+    <div class="studio__group">
+      <h3><span data-i18n="studio.palette">Paleta</span>: <span id="paletteName">Âmbar</span></h3>
+      <div class="swatches" id="swatches"></div>
+    </div>
+
+    <div class="studio__group">
+      <label for="hueRange" data-i18n="studio.hue">Matiz personalizado</label>
+      <input id="hueRange" class="hue" type="range" min="0" max="359" step="1" value="36">
+    </div>
+
+    <div class="studio__group">
+      <h3 data-i18n="studio.theme">Tema</h3>
+      <div class="seg" data-setting="theme">
+        <button type="button" data-value="dark" aria-pressed="true" data-i18n="studio.dark">Escuro</button>
+        <button type="button" data-value="light" aria-pressed="false" data-i18n="studio.light">Claro</button>
+      </div>
+    </div>
+
+    <div class="studio__group">
+      <h3 data-i18n="studio.radius">Cantos</h3>
+      <div class="seg" data-setting="radius">
+        <button type="button" data-value="sharp" aria-pressed="false" data-i18n="studio.sharp">Retos</button>
+        <button type="button" data-value="soft" aria-pressed="true" data-i18n="studio.soft">Suaves</button>
+        <button type="button" data-value="round" aria-pressed="false" data-i18n="studio.round">Redondos</button>
+      </div>
+    </div>
+
+    <div class="studio__group">
+      <h3 data-i18n="studio.font">Tipografia</h3>
+      <div class="seg" data-setting="font">
+        <button type="button" data-value="expressive" aria-pressed="true" data-i18n="studio.expressive">Expressiva</button>
+        <button type="button" data-value="classic" aria-pressed="false" data-i18n="studio.classic">Clássica</button>
+        <button type="button" data-value="tech" aria-pressed="false" data-i18n="studio.tech">Técnica</button>
+      </div>
+    </div>
+
+    <div class="studio__group">
+      <h3 data-i18n="studio.density">Espaçamento</h3>
+      <div class="seg" data-setting="density">
+        <button type="button" data-value="compact" aria-pressed="false" data-i18n="studio.compact">Compacto</button>
+        <button type="button" data-value="comfy" aria-pressed="true" data-i18n="studio.comfy">Confortável</button>
+      </div>
+    </div>
+
+    <div class="studio__group">
+      <h3 data-i18n="studio.motion">Movimento</h3>
+      <div class="seg" data-setting="motion">
+        <button type="button" data-value="on" aria-pressed="true" data-i18n="studio.on">Ligado</button>
+        <button type="button" data-value="off" aria-pressed="false" data-i18n="studio.off">Desligado</button>
+      </div>
+    </div>
+
+    <div class="studio__actions">
+      <button class="btn btn--primary" type="button" id="surprise" data-i18n="studio.surprise">Surpreenda-me</button>
+      <button class="btn btn--ghost" type="button" id="resetDesign" data-i18n="studio.reset">Restaurar</button>
+    </div>
+  </aside>
+
+  <dialog class="cmdk" id="cmdk" aria-label="Busca rápida" data-i18n-attr="aria-label:cmdk.aria">
+    <div class="cmdk__box">
+      <input id="cmdkInput" class="cmdk__input" type="text" role="combobox" aria-expanded="true" aria-controls="cmdkList" aria-autocomplete="list" placeholder="Buscar seção, projeto ou ajuste de design" autocomplete="off" spellcheck="false" data-i18n-attr="placeholder:cmdk.placeholder">
+      <ul class="cmdk__list" id="cmdkList" role="listbox" aria-label="Resultados" data-i18n-attr="aria-label:cmdk.results"></ul>
+      <p class="cmdk__foot"><span data-i18n="cmdk.nav">Setas para navegar</span><span data-i18n="cmdk.enter">Enter para abrir</span><span data-i18n="cmdk.esc">Esc para fechar</span></p>
+    </div>
+  </dialog>
+
+  <dialog class="dlg" id="projectDialog" aria-labelledby="dialogTitle"></dialog>
+  <dialog class="access" id="accessDialog" aria-labelledby="accessTitle"></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="i18n.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
