@@ -30,7 +30,7 @@ window.I18N = {
 
       'hero.hello': 'Olá, eu sou o Gabriel Vidal, desenvolvedor web.',
       'hero.title': 'Sites e sistemas web para negócios de verdade.',
-      'hero.lead': 'Meu foco é o front-end com HTML, CSS e JavaScript, e eu vou até o back-end com Node.js e bancos de dados. Também desenvolvo em Python, sob demanda. Cada projeto parte da marca do cliente e é pensado primeiro para o celular.',
+      'hero.lead': 'Meu foco é o front-end com HTML, CSS e JavaScript, e vou até o back-end com Node.js e bancos de dados. Também desenvolvo em Python, sob demanda. Cada projeto parte da marca do cliente e é pensado primeiro para o celular.',
       'hero.nowLabel': 'Construindo agora:',
       'hero.ctaProjects': 'Ver projetos',
       'hero.ctaDesign': 'Mudar o design do site',
@@ -54,7 +54,7 @@ window.I18N = {
       'fact.lang.value': 'Português e espanhol (fluente), inglês (intermediário)',
       'about.timeline': 'Trajetória',
       'tl.1.title': 'Desenvolvedor web freelancer',
-      'tl.1.text': 'Sites e sistemas para pequenos negócios, do briefing ao código: barbearias, turismo, revenda de carros e cosméticos.',
+      'tl.1.text': 'Sites e sistemas para pequenos e grandes negócios, do briefing ao código: barbearias, turismo, revenda de carros e cosméticos.',
       'tl.2.title': 'Projetos autorais',
       'tl.2.text': 'CT, uma calculadora com cinco abas, e Gasto na Foto, que lê comprovantes com IA e soma o total.',
       'tl.3.title': 'Profissional autônomo',
@@ -115,7 +115,7 @@ window.I18N = {
       'skill.interactive-ui': 'Interfaces interativas',
 
       'method.title': 'Como eu trabalho',
-      'method.lead': 'Cinco hábitos que se repetem nos projetos acima. Cada passo aponta para onde dá para ver a prática.',
+      'method.lead': 'Cinco hábitos que se repetem nos projetos acima. Cada passo aponta para onde é possivel ver a prática.',
       'method.1.title': 'Parto da marca do cliente',
       'method.1.text': 'O CSS nasce da logo: azul marinho e laranja na Navegar, preto e branco na Ita du Corte, rosa e rose gold na LS Beauty.',
       'method.2.title': 'Desenho primeiro para o celular',
@@ -879,7 +879,7 @@ window.I18N = {
         title: 'Studio B’Sant Barbershop',
         summary: 'Landing page mobile primeiro para uma barbearia, com agendamento por WhatsApp e rota no Google Maps.',
         story: 'A maior parte dos clientes acessa pelo celular, então o layout nasceu na tela pequena. O bege claro com contraste forte dá a identidade do estúdio.',
-        challenge: 'Levar o cliente do celular ao agendamento em poucos toques, usando o WhatsApp que ele já tem, sem formulário nem cadastro.',
+        challenge: 'Levar o cliente do celular ao agendamento em poucos toques, utilizando o WhatsApp que já possui, sem formulário nem cadastro.',
         done: [
           'Agendamento por link de WhatsApp',
           'Botão Como chegar que abre o Google Maps com o endereço',
@@ -907,7 +907,7 @@ window.I18N = {
       'ct': {
         title: 'CT, Calcula Tudo',
         summary: 'Calculadora multifuncional com cinco abas: básica, científica, preços, IMC e financiamento.',
-        story: 'Projeto autoral em HTML, CSS e JavaScript puros, com a sigla CT em verde sobre preto. Na seção Experimente você testa uma versão resumida das abas IMC e Financiamento.',
+        story: 'Projeto autoral em HTML, CSS e JavaScript puros, com a sigla CT em verde sobre preto. Na seção "Experimente", você pode testar uma versão resumida das abas IMC e Financiamento.',
         challenge: 'Reunir cinco calculadoras diferentes em uma interface única, com abas e um visual consistente.',
         done: [
           'Cinco abas: Básica, Científica, Preços, IMC e Financiamento',
