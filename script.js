@@ -145,14 +145,6 @@
     ['navegar', 'ct', 'gasto-na-foto']
   ];
 
-  const PALETTES = [
-    { id: 'amber', h1: 36, h2: 12, hb: 30 },
-    { id: 'ocean', h1: 188, h2: 218, hb: 205 },
-    { id: 'forest', h1: 146, h2: 84, hb: 150 },
-    { id: 'rose', h1: 346, h2: 22, hb: 345 },
-    { id: 'amethyst', h1: 268, h2: 318, hb: 268 }
-  ];
-
   const TESTIMONIALS = [
   ];
   const EDUCATION = [
@@ -252,175 +244,47 @@
     if (target) target.scrollIntoView({ behavior: motionOn() ? 'smooth' : 'auto' });
   }
 
-  const STORAGE_KEY = 'portfolio-design';
-  const ALLOWED = {
-    theme: ['dark', 'light'],
-    radius: ['sharp', 'soft', 'round'],
-    font: ['expressive', 'classic', 'tech'],
-    density: ['compact', 'comfy'],
-    motion: ['on', 'off']
-  };
-  const DEFAULTS = {
-    palette: 'amber',
-    hue: null,
-    theme: 'dark',
-    radius: 'soft',
-    font: 'expressive',
-    density: 'comfy',
-    motion: prefersReducedMotion ? 'off' : 'on'
-  };
-
-  function loadSettings() {
-    const settings = { ...DEFAULTS };
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-      if (saved && typeof saved === 'object') {
-        Object.keys(ALLOWED).forEach((key) => {
-          if (ALLOWED[key].includes(saved[key])) settings[key] = saved[key];
-        });
-        if (PALETTES.some((p) => p.id === saved.palette)) settings.palette = saved.palette;
-        if (Number.isFinite(saved.hue) && saved.hue >= 0 && saved.hue <= 359) settings.hue = Math.round(saved.hue);
-      }
-    } catch (error) { }
-    return settings;
-  }
-
-  const settings = loadSettings();
+  const THEME_KEY = 'portfolio-theme';
   let themeAnimTimer = 0;
 
-  function currentHues() {
-    if (settings.hue !== null) return { h1: settings.hue, h2: (settings.hue + 38) % 360, hb: settings.hue };
-    const palette = PALETTES.find((p) => p.id === settings.palette) || PALETTES[0];
-    return { h1: palette.h1, h2: palette.h2, hb: palette.hb };
+  function systemTheme() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
-  function applyDesign(animate) {
-    if (animate && motionOn()) {
+  function savedTheme() {
+    try {
+      const value = localStorage.getItem(THEME_KEY);
+      return value === 'light' || value === 'dark' ? value : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function applyTheme(theme, options = {}) {
+    if (options.animate && motionOn()) {
       root.classList.add('theme-anim');
       clearTimeout(themeAnimTimer);
       themeAnimTimer = setTimeout(() => root.classList.remove('theme-anim'), 600);
     }
-    const hues = currentHues();
-    root.style.setProperty('--h1', hues.h1);
-    root.style.setProperty('--h2', hues.h2);
-    root.style.setProperty('--hb', hues.hb);
-    Object.keys(ALLOWED).forEach((key) => { root.dataset[key] = settings[key]; });
-
+    root.dataset.theme = theme;
     const meta = $('meta[name="theme-color"]');
     if (meta) {
       const bg = getComputedStyle(root).getPropertyValue('--bg').trim();
       if (bg) meta.setAttribute('content', bg);
     }
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...settings, hues }));
-    } catch (error) { }
-    syncStudio();
-    ensureLoop();
-  }
-
-  const studio = $('#studio');
-  const studioToggle = $('#studioToggle');
-  const studioHint = $('#studioHint');
-  const hueRange = $('#hueRange');
-
-  function renderSwatches() {
-    $('#swatches').innerHTML = PALETTES.map((p) => {
-      const name = t(`palette.${p.id}`);
-      return `<button class="swatch" type="button" data-palette="${p.id}" aria-pressed="false" aria-label="${esc(t('studio.paletteAria', { name }))}" title="${esc(name)}" style="--sw1:${p.h1};--sw2:${p.h2}"></button>`;
-    }).join('');
-  }
-
-  function syncStudio() {
-    $$('.swatch').forEach((button) => {
-      button.setAttribute('aria-pressed', String(settings.hue === null && button.dataset.palette === settings.palette));
-    });
-    $$('.seg').forEach((group) => {
-      $$('button', group).forEach((button) => {
-        button.setAttribute('aria-pressed', String(settings[group.dataset.setting] === button.dataset.value));
-      });
-    });
-    hueRange.value = currentHues().h1;
-    $('#paletteName').textContent = settings.hue !== null ? t('studio.paletteCustom') : t(`palette.${settings.palette}`);
-  }
-
-  function openStudio() {
-    studio.hidden = false;
-    studioToggle.setAttribute('aria-expanded', 'true');
-    studioHint.hidden = true;
-    markHintSeen();
-    const first = $('.swatch', studio);
-    if (first) first.focus();
-  }
-  function closeStudio(returnFocus = true) {
-    studio.hidden = true;
-    studioToggle.setAttribute('aria-expanded', 'false');
-    if (returnFocus) studioToggle.focus();
-  }
-
-  studioToggle.addEventListener('click', () => (studio.hidden ? openStudio() : closeStudio()));
-  $$('[data-open-studio]').forEach((button) => button.addEventListener('click', openStudio));
-
-  studio.addEventListener('click', (event) => {
-    if (event.target.closest('[data-studio-close]')) {
-      closeStudio();
-      return;
+    if (options.save) {
+      try { localStorage.setItem(THEME_KEY, theme); } catch (error) { }
     }
-    const swatch = event.target.closest('[data-palette]');
-    if (swatch) {
-      settings.palette = swatch.dataset.palette;
-      settings.hue = null;
-      applyDesign(true);
-      return;
-    }
-    const option = event.target.closest('.seg button');
-    if (option) {
-      settings[option.parentElement.dataset.setting] = option.dataset.value;
-      applyDesign(true);
-    }
+  }
+
+  function toggleTheme() {
+    applyTheme(root.dataset.theme === 'light' ? 'dark' : 'light', { animate: true, save: true });
+  }
+
+  $('#themeToggle').addEventListener('click', toggleTheme);
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (!savedTheme()) applyTheme(systemTheme());
   });
-  hueRange.addEventListener('input', () => {
-    settings.hue = Number(hueRange.value);
-    applyDesign(false);
-  });
-
-  function surprise() {
-    const pick = (list) => list[Math.floor(Math.random() * list.length)];
-    if (Math.random() < 0.5) {
-      settings.hue = Math.floor(Math.random() * 360);
-    } else {
-      const others = PALETTES.filter((p) => p.id !== settings.palette || settings.hue !== null);
-      settings.palette = pick(others).id;
-      settings.hue = null;
-    }
-    settings.font = pick(ALLOWED.font);
-    settings.radius = pick(ALLOWED.radius);
-    applyDesign(true);
-  }
-  function resetDesign() {
-    Object.assign(settings, DEFAULTS);
-    applyDesign(true);
-    showToast(t('toast.reset'));
-  }
-  $('#surprise').addEventListener('click', surprise);
-  $('#resetDesign').addEventListener('click', resetDesign);
-  $('#themeToggle').addEventListener('click', () => {
-    settings.theme = settings.theme === 'light' ? 'dark' : 'light';
-    applyDesign(true);
-  });
-
-  function markHintSeen() {
-    try { localStorage.setItem('portfolio-hint-seen', '1'); } catch (error) { }
-  }
-  function scheduleHint() {
-    let seen = false;
-    try { seen = localStorage.getItem('portfolio-hint-seen') === '1'; } catch (error) { }
-    if (seen) return;
-    setTimeout(() => {
-      if (!studio.hidden) return;
-      studioHint.hidden = false;
-      setTimeout(() => { studioHint.hidden = true; markHintSeen(); }, 7000);
-    }, 5000);
-  }
 
   const rects = (cols, rows, x, y, w, h, gap, rx, cls, accentLastCol = false) => {
     let out = '';
@@ -491,8 +355,6 @@
     if (header.dataset.open === 'true') {
       setMenu(false);
       menuToggle.focus();
-    } else if (!studio.hidden && !document.querySelector('dialog[open]')) {
-      closeStudio();
     }
   });
 
@@ -1441,17 +1303,7 @@
     [['sobre', 'nav.about'], ['projetos', 'nav.projects'], ['conhecimentos', 'nav.skills'], ['metodo', 'nav.method'], ['experimente', 'nav.lab'], ['contato', 'nav.contact']]
       .forEach(([id, key]) => commands.push({ group: t('cmdk.groupGo'), label: t(key), run: () => goTo(id) }));
     PROJECTS.forEach((p) => commands.push({ group: t('cmdk.groupProject'), label: tp(p).title, run: () => openProject(p.id) }));
-    PALETTES.forEach((p) => commands.push({
-      group: t('cmdk.groupPalette'),
-      label: t(`palette.${p.id}`),
-      run: () => { settings.palette = p.id; settings.hue = null; applyDesign(true); }
-    }));
-    commands.push(
-      { group: t('cmdk.groupDesign'), label: t('cmd.theme'), run: () => { settings.theme = settings.theme === 'light' ? 'dark' : 'light'; applyDesign(true); } },
-      { group: t('cmdk.groupDesign'), label: t('cmd.studio'), run: openStudio },
-      { group: t('cmdk.groupDesign'), label: t('cmd.surprise'), run: surprise },
-      { group: t('cmdk.groupDesign'), label: t('cmd.reset'), run: resetDesign }
-    );
+    commands.push({ group: t('cmdk.groupDesign'), label: t('cmd.theme'), run: toggleTheme });
     I18N.languages.forEach((l) => commands.push({
       group: t('cmdk.groupLang'),
       label: LANG_NAMES[l.code] || l.code,
@@ -1572,7 +1424,6 @@
 
   function renderDynamic() {
     renderBento();
-    renderSwatches();
     renderSkills();
     if (selectedSkill) showSkill(selectedSkill);
     renderMethod();
@@ -1594,7 +1445,6 @@
     setMenu(header.dataset.open === 'true');
     $$('[data-lang]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.lang === lang)));
     renderDynamic();
-    syncStudio();
     typed.reset();
     if (initial) return;
 
@@ -1614,7 +1464,7 @@
 
   buildMarquee();
   setLanguage(lang, true);
-  applyDesign(false);
+  applyTheme(savedTheme() || systemTheme());
   renderFilters();
   loadProjects();
   autoReveal();
@@ -1625,7 +1475,6 @@
   syncDialogToHash();
   measure();
   onScroll();
-  scheduleHint();
   ensureLoop();
   window.addEventListener('load', measure);
 })();

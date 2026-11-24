@@ -20,17 +20,16 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231c1917'/%3E%3Ctext x='32' y='44' font-size='36' font-family='Georgia,serif' font-weight='700' text-anchor='middle' fill='%23f0a93e'%3EG%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Hanken+Grotesk:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>
     (function () {
       var d = document.documentElement;
       d.classList.add('js');
-      var reduce = false;
-      var saved = null;
-      var lang = null;
+      var reduce = false, theme = null, lang = null, dark = false;
       try { reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
-      try { saved = JSON.parse(localStorage.getItem('portfolio-design') || 'null'); } catch (e) {}
+      try { dark = matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
+      try { theme = localStorage.getItem('portfolio-theme'); } catch (e) {}
       try { lang = localStorage.getItem('portfolio-lang'); } catch (e) {}
       if (!lang) {
         var prefs = navigator.languages || [navigator.language || 'pt'];
@@ -40,17 +39,8 @@
         }
       }
       d.lang = lang === 'en' ? 'en' : (lang === 'es' ? 'es' : 'pt-BR');
-      var s = saved || {};
-      d.dataset.theme = s.theme === 'light' ? 'light' : 'dark';
-      d.dataset.radius = s.radius || 'soft';
-      d.dataset.font = s.font || 'expressive';
-      d.dataset.density = s.density || 'comfy';
-      d.dataset.motion = s.motion || (reduce ? 'off' : 'on');
-      if (s.hues) {
-        d.style.setProperty('--h1', s.hues.h1);
-        d.style.setProperty('--h2', s.hues.h2);
-        d.style.setProperty('--hb', s.hues.hb);
-      }
+      d.dataset.theme = theme === 'light' || theme === 'dark' ? theme : (dark ? 'dark' : 'light');
+      d.dataset.motion = reduce ? 'off' : 'on';
     })();
   </script>
 </head>
@@ -109,13 +99,12 @@
           <p class="hero__loc hero-in" id="heroLoc" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span></span></p>
           <p class="hero__hello hero-in" data-i18n="hero.hello">Olá, eu sou o Gabriel Vidal, desenvolvedor web.</p>
           <h1 id="heroTitle" data-split data-i18n="hero.title">Sites e sistemas web para negócios de verdade.</h1>
-          <p class="hero__lead hero-in" data-i18n="hero.lead">Meu foco é o front-end com HTML, CSS e JavaScript, e vou até o back-end com Node.js e bancos de dados. Também desenvolvo em Python, sob demanda. Cada projeto parte da marca do cliente e é pensado primeiro para o celular.</p>
+          <p class="hero__lead hero-in" data-i18n="hero.lead">Meu foco é o front-end com HTML, CSS e JavaScript, e eu vou até o back-end com Node.js e bancos de dados. Também desenvolvo em Python, sob demanda. Cada projeto parte da marca do cliente e é pensado primeiro para o celular.</p>
           <p class="hero__now hero-in"><span class="hero__now-label" data-i18n="hero.nowLabel">Construindo agora:</span> <span class="typed" id="typed" aria-live="off"></span></p>
           <div class="hero__actions hero-in">
             <a class="btn btn--primary" href="#projetos" data-i18n="hero.ctaProjects">Ver projetos</a>
             <a class="btn btn--ghost" href="#contato" data-i18n="hero.ctaTalk">Falar comigo</a>
             <a class="btn btn--ghost" id="heroCv" href="#" target="_blank" rel="noopener noreferrer" hidden data-i18n="hero.ctaCv">Ver meu currículo</a>
-            <button class="btn btn--text" type="button" data-open-studio data-i18n="hero.ctaDesign">Mudar o design do site</button>
           </div>
         </div>
         <div class="bento hero-in" id="heroBento" aria-label="Projetos em destaque" data-i18n-attr="aria-label:hero.bento"></div>
@@ -136,7 +125,7 @@
       <div class="container about">
         <div class="about__main">
           <h2 id="aboutTitle" data-split data-i18n="about.title">Programo com o olhar de quem também desenha.</h2>
-          <p data-i18n="about.p1">Sou desenvolvedor de sites e sistemas, com mais força no front-end (HTML, CSS e JavaScript) e experiência crescente no back-end com Node.js e bancos de dados. Meus projetos são para negócios reais: barbearias, uma empresa de turismo, uma revenda de carros e uma loja de cosméticos.</p>
+          <p data-i18n="about.p1">Sou desenvolvedor de sites e sistemas, com mais força no front-end (HTML, CSS e JavaScript) e experiência crescente no back-end com Node.js e bancos de dados. Meus projetos são para negócios reais, de diferentes segmentos, de landing pages a sistemas com painel administrativo.</p>
           <p data-i18n="about.p2">Gosto de interfaces com pouco ruído, hierarquia clara e atenção ao detalhe. Cada projeto parte da marca do cliente, e cada tela é pensada primeiro para o celular.</p>
 
           <p class="statement" data-i18n="about.statement">Entrego o que funciona e cuido para que também dê gosto de usar.</p>
@@ -154,7 +143,7 @@
           <ul class="timeline trail">
             <li>
               <h4 data-i18n="tl.1.title">Desenvolvedor web freelancer</h4>
-              <p data-i18n="tl.1.text">Sites e sistemas para pequenos negócios, do briefing ao código: barbearias, turismo, revenda de carros e cosméticos.</p>
+              <p data-i18n="tl.1.text">Sites e sistemas para negócios de diferentes segmentos, do briefing ao código.</p>
             </li>
             <li>
               <h4 data-i18n="tl.2.title">Projetos autorais</h4>
@@ -322,76 +311,6 @@
     </div>
   </footer>
 
-  <button class="studio-toggle" id="studioToggle" type="button" aria-expanded="false" aria-controls="studio">
-    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-.8 2-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15" cy="7.5" r="1.2" fill="currentColor"/></svg>
-    <span data-i18n="studio.toggle">Design</span>
-  </button>
-  <div class="studio-hint" id="studioHint" role="status" hidden data-i18n="studio.hint">Quer mudar as cores e o estilo do site? Toque em Design.</div>
-
-  <aside class="studio" id="studio" aria-labelledby="studioTitle" hidden>
-    <div class="studio__head">
-      <h2 id="studioTitle" data-i18n="studio.title">Estúdio de design</h2>
-      <button class="studio__close" type="button" data-studio-close aria-label="Fechar estúdio de design" data-i18n-attr="aria-label:studio.close">&times;</button>
-    </div>
-    <p class="studio__lead" data-i18n="studio.lead">Mude o visual deste portfólio em tempo real. Suas escolhas ficam salvas neste navegador.</p>
-
-    <div class="studio__group">
-      <h3><span data-i18n="studio.palette">Paleta</span>: <span id="paletteName">Âmbar</span></h3>
-      <div class="swatches" id="swatches"></div>
-    </div>
-
-    <div class="studio__group">
-      <label for="hueRange" data-i18n="studio.hue">Matiz personalizado</label>
-      <input id="hueRange" class="hue" type="range" min="0" max="359" step="1" value="36">
-    </div>
-
-    <div class="studio__group">
-      <h3 data-i18n="studio.theme">Tema</h3>
-      <div class="seg" data-setting="theme">
-        <button type="button" data-value="dark" aria-pressed="true" data-i18n="studio.dark">Escuro</button>
-        <button type="button" data-value="light" aria-pressed="false" data-i18n="studio.light">Claro</button>
-      </div>
-    </div>
-
-    <div class="studio__group">
-      <h3 data-i18n="studio.radius">Cantos</h3>
-      <div class="seg" data-setting="radius">
-        <button type="button" data-value="sharp" aria-pressed="false" data-i18n="studio.sharp">Retos</button>
-        <button type="button" data-value="soft" aria-pressed="true" data-i18n="studio.soft">Suaves</button>
-        <button type="button" data-value="round" aria-pressed="false" data-i18n="studio.round">Redondos</button>
-      </div>
-    </div>
-
-    <div class="studio__group">
-      <h3 data-i18n="studio.font">Tipografia</h3>
-      <div class="seg" data-setting="font">
-        <button type="button" data-value="expressive" aria-pressed="true" data-i18n="studio.expressive">Expressiva</button>
-        <button type="button" data-value="classic" aria-pressed="false" data-i18n="studio.classic">Clássica</button>
-        <button type="button" data-value="tech" aria-pressed="false" data-i18n="studio.tech">Técnica</button>
-      </div>
-    </div>
-
-    <div class="studio__group">
-      <h3 data-i18n="studio.density">Espaçamento</h3>
-      <div class="seg" data-setting="density">
-        <button type="button" data-value="compact" aria-pressed="false" data-i18n="studio.compact">Compacto</button>
-        <button type="button" data-value="comfy" aria-pressed="true" data-i18n="studio.comfy">Confortável</button>
-      </div>
-    </div>
-
-    <div class="studio__group">
-      <h3 data-i18n="studio.motion">Movimento</h3>
-      <div class="seg" data-setting="motion">
-        <button type="button" data-value="on" aria-pressed="true" data-i18n="studio.on">Ligado</button>
-        <button type="button" data-value="off" aria-pressed="false" data-i18n="studio.off">Desligado</button>
-      </div>
-    </div>
-
-    <div class="studio__actions">
-      <button class="btn btn--primary" type="button" id="surprise" data-i18n="studio.surprise">Surpreenda-me</button>
-      <button class="btn btn--ghost" type="button" id="resetDesign" data-i18n="studio.reset">Restaurar</button>
-    </div>
-  </aside>
 
   <dialog class="cmdk" id="cmdk" aria-label="Busca rápida" data-i18n-attr="aria-label:cmdk.aria">
     <div class="cmdk__box">
